@@ -122,7 +122,7 @@ flags.DEFINE_bool(
     "use_nsp", False,
     "Whether to use next sentence prediction loss.")
 
-flags.DEFILE_string(
+flags.DEFINE_string(
     "vocab_model", None,
     "Sentencepiece model path."
 )
