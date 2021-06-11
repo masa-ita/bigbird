@@ -122,6 +122,26 @@ flags.DEFINE_bool(
     "use_nsp", False,
     "Whether to use next sentence prediction loss.")
 
+flags.DEFILE_string(
+    "vocab_model", None,
+    "Sentencepiece model path."
+)
+
+flags.DEFINE_integer(
+    "cls_token_id", 65,
+    "[CLS] token id."
+)
+
+flags.DEFINE_integer(
+    "sep_token_id", 66,
+    "[SEP] token id."
+)
+
+flags.DEFINE_integer(
+    "mask_token_id", 67,
+    "[MASK] token id."
+)
+
 
 def input_fn_builder(data_dir, vocab_model_file, masked_lm_prob,
                      max_encoder_length, max_predictions_per_seq,
