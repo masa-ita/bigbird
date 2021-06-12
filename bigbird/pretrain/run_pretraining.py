@@ -265,14 +265,14 @@ def input_fn_builder(data_dir, vocab_model_file, masked_lm_prob,
     mask_index = masked_lm_positions[randomness < 0.8]
     random_index = masked_lm_positions[randomness > 0.9]
 
-    subtokens[mask_index] = 67  # id of masked token
+    subtokens[mask_index] = FLAGS['mask_token_id']  # id of masked token
     subtokens[random_index] = np.random.randint(  # ignore special tokens
         101, vocab_size, len(random_index), dtype=np.int32)
 
     # add [CLS] (65) and [SEP] (66) tokens
     subtokens = np.concatenate([
-        np.array([65], dtype=np.int32), subtokens,
-        np.array([66], dtype=np.int32)
+        np.array([FLAGS['cls_token_id']], dtype=np.int32), subtokens,
+        np.array([FLAGS['sep_token_id']], dtype=np.int32)
     ])
 
     # pad everything to correct shape
