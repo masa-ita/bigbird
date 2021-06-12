@@ -142,6 +142,30 @@ flags.DEFINE_integer(
     "[MASK] token id."
 )
 
+flags.DEFINE_bool(
+    "use_tpu", True,
+    "Use Cloud TPU."
+)
+
+flags.DEFINE_string(
+    "tpu_name", None,
+    "Cloud TPU name."
+)
+
+flags.DEFINE_string(
+    "tpu_zone", "us-central1-a",
+    "Cloud TPU zone."
+)
+
+flags.DEFINE_string(
+    "gcp_project", None,
+    "GCP project name."
+)
+
+flags.DEFINE_integer(
+    "num_tpu_cores", 8,
+    "Number of Cloud TPU cores."
+)
 
 def input_fn_builder(data_dir, vocab_model_file, masked_lm_prob,
                      max_encoder_length, max_predictions_per_seq,
