@@ -213,6 +213,7 @@ def input_fn_builder(data_dir, vocab_model_file, masked_lm_prob,
     }
     return features
 
+  @tf.function
   def numpy_masking(subtokens):
     # Find a random span in text
     end_pos = max_encoder_length - 2 + np.random.randint(
