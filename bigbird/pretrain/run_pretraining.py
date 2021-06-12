@@ -201,8 +201,9 @@ def input_fn_builder(data_dir, vocab_model_file, masked_lm_prob,
       text = tf.strings.regex_replace(text, "\n", substitute_newline)
     subtokens = tokenizer.tokenize(text)
     (subtokens, masked_lm_positions, masked_lm_ids,
-     masked_lm_weights) = numpy_masking(subtokens)
-    
+      masked_lm_weights) = tf.compat.v1.py_func(
+         numpy_masking, [subtokens], [tf.int32, tf.int32, tf.int32, tf.float32],
+         stateful=False)    
     features = {
         "input_ids": subtokens,
         "segment_ids": tf.zeros_like(subtokens),
@@ -213,7 +214,6 @@ def input_fn_builder(data_dir, vocab_model_file, masked_lm_prob,
     }
     return features
 
-  @tf.function
   def numpy_masking(subtokens):
     # Find a random span in text
     end_pos = max_encoder_length - 2 + np.random.randint(
