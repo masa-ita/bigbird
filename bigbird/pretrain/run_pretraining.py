@@ -122,11 +122,6 @@ flags.DEFINE_bool(
     "use_nsp", False,
     "Whether to use next sentence prediction loss.")
 
-flags.DEFINE_string(
-    "vocab_model", None,
-    "Sentencepiece model path."
-)
-
 flags.DEFINE_integer(
     "cls_token_id", 65,
     "[CLS] token id."
