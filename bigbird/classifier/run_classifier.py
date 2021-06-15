@@ -103,6 +103,16 @@ flags.DEFINE_integer(
     "num_labels", 2,
     "Number of ways to classify.")
 
+flags.DEFINE_integer(
+    "cls_token_id", 65,
+    "[CLS] token id."
+)
+
+flags.DEFINE_integer(
+    "sep_token_id", 66,
+    "[SEP] token id."
+)
+
 
 def input_fn_builder(data_dir, vocab_model_file, max_encoder_length,
                      substitute_newline, is_training, tmp_dir=None):
@@ -125,9 +135,9 @@ def input_fn_builder(data_dir, vocab_model_file, max_encoder_length,
       text = tf.strings.regex_replace(text, "\n", substitute_newline)
     ids = tokenizer.tokenize(text)
     ids = ids[:max_encoder_length - 2]
-    # Add [CLS] (65) and [SEP] (66) special tokens.
-    prefix = tf.constant([65])
-    suffix = tf.constant([66])
+    # Add [CLS] and  special tokens.
+    prefix = tf.constant([FLAGS.cls_token_id])
+    suffix = tf.constant([FLAGS.sep_token_id])
     ids = tf.concat([prefix, ids, suffix], axis=0)
     if isinstance(ids, tf.RaggedTensor):
       ids = ids.to_tensor(0)
@@ -204,8 +214,8 @@ def serving_input_fn_builder(batch_size, max_encoder_length,
     ids = ids[:, :max_encoder_length - 2]
 
     # Add [CLS] and [SEP] special tokens.
-    prefix = tf.repeat(tf.constant([[65]]), batch_size, axis=0)
-    suffix = tf.repeat(tf.constant([[66]]), batch_size, axis=0)
+    prefix = tf.repeat(tf.constant([[FLAGS.cls_token_id]]), batch_size, axis=0)
+    suffix = tf.repeat(tf.constant([[FLAGS.sep_token_id]]), batch_size, axis=0)
     ids = tf.concat([prefix, ids, suffix], axis=1)
     if isinstance(ids, tf.RaggedTensor):
       ids = ids.to_tensor(0)

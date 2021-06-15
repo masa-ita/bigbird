@@ -264,7 +264,7 @@ def input_fn_builder(data_dir, vocab_model_file, masked_lm_prob,
     subtokens[random_index] = np.random.randint(  # ignore special tokens
         101, vocab_size, len(random_index), dtype=np.int32)
 
-    # add [CLS] (65) and [SEP] (66) tokens
+    # add [CLS] and [SEP]  tokens
     subtokens = np.concatenate([
         np.array([FLAGS['cls_token_id']], dtype=np.int32), subtokens,
         np.array([FLAGS['sep_token_id']], dtype=np.int32)
