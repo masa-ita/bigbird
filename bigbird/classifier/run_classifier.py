@@ -422,6 +422,8 @@ def main(_):
         eval_steps = eval_input_fn({
             "batch_size": estimator.eval_batch_size
         }).cardinality().eval(session=sess)
+      if eval_steps < 0:
+        eval_steps = FLAGS.max_eval_steps
     else:
       eval_steps = None
 
