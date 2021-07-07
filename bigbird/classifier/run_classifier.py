@@ -113,6 +113,10 @@ flags.DEFINE_integer(
     "[SEP] token id."
 )
 
+flags.DEFINE_integer(
+    "max_eval_steps", 1000,
+    "max_eval_steps when cardinality is infinite or unknown."
+)
 
 def input_fn_builder(data_dir, vocab_model_file, max_encoder_length,
                      substitute_newline, is_training, tmp_dir=None):
